@@ -12,9 +12,9 @@ def get_factors(number):
 
 
 def main():
-    number = random.randint(1,100)
+    number = random.randint(1, 100)
     print(f"The unique factors of {number} are {get_factors(number)}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

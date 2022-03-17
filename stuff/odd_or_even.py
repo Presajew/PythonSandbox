@@ -1,16 +1,12 @@
-
-
-
-
 def isEvenOrOdd(number):
-    if (number % 2 == 0):
-        return 'EVEN'
+    if number % 2 == 0:
+        return "EVEN"
     else:
-        return 'ODD'
+        return "ODD"
 
 
 def isNumberFactorOfOtherNumber(number, divisor):
-    return (number % divisor == 0)
+    return number % divisor == 0
 
 
 def main():
@@ -27,5 +23,5 @@ def main():
     print(isNumberFactorOfOtherNumber(numb1, numb2))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
