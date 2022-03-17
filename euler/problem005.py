@@ -5,13 +5,14 @@
 from math import factorial, prod
 from problem003 import get_prime_factors
 
+
 def calculate() -> int:
-    
+
     scope = 20
 
     # get prime factorization of scope!
     factors = get_prime_factors(factorial(scope))
-    
+
     # make list unique
     unique_factors = list(set(factors))
 
@@ -24,12 +25,14 @@ def calculate() -> int:
 
     return val
 
+
 def append_unique_factors(factors, val) -> None:
     list_factors = get_prime_factors(val)
     set_factors = set(list_factors)
     for x in set_factors:
         while factors.count(x) < list_factors.count(x):
             factors.append(x)
+
 
 if __name__ == "__main__":
     print(f"The answer to Problem 5 is {calculate()}")
