@@ -21,6 +21,7 @@ def get_list_overlap(list1, list2):
                 list2.remove(item2)
     return list_overlap
 
+
 def main():
     list1 = generate_random_list_of_numbers()
     list2 = generate_random_list_of_numbers()
@@ -30,5 +31,5 @@ def main():
     print(list_overlap)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
