@@ -17,7 +17,6 @@ def get_prime_factors(val) -> list:
             val /= counter
         else:
             counter += 1
-    print(factors)
     return factors
 
 
