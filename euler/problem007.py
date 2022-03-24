@@ -3,6 +3,7 @@
 #   What is the 10 001st prime number?
 
 import time
+import math
 
 
 def calculate() -> int:
@@ -18,7 +19,7 @@ def calculate() -> int:
 
 
 def is_prime(val) -> bool:
-    for i in range(2, val):
+    for i in range(2, int(math.sqrt(val) + 1)):
         if val % i == 0:
             return False
     return True
