@@ -7,6 +7,7 @@ What is the sum of the digits of the number 2^1000?
 """
 
 import math
+import time
 
 
 def calculate():
@@ -22,4 +23,7 @@ def sum_of_digits(val) -> int:
 
 
 if __name__ == "__main__":
-	calculate()
+    start_time = time.time()
+    print(f"The answer to Problem 29 is {calculate()}")
+    end_time = time.time()
+    print(f"This solution took {end_time - start_time} seconds to run")
