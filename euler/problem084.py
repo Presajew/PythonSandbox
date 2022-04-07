@@ -71,7 +71,7 @@ def calculate() -> int:
 	community_chest = init_community_chest()
 
 	# test dice
-	for y in range(10000):
+	for y in range(1000000):
 
 		# roll check
 		dice = roll()
@@ -83,54 +83,53 @@ def calculate() -> int:
 			double_count = 0
 
 		if double_count == 3:		
-			print(f"{dice} !!! 3 doubles in a row sends you to jail")
+			#print(f"{dice} !!! 3 doubles in a row sends you to jail")
 			location = 10	
 		else:
 			location = move(location, dice)
-			
-      #TODO -> resolve empty list issue
-      if is_chance(location):
-				print(f"{dice} !!! You landed on chance")
+			if is_chance(location):
+				#print(f"{dice} !!! You landed on chance")
 				if len(chance) == 0:
 					chance = init_chance()
-				move_modifier = draw_chance(chance, location)
+				card = chance.pop()
+				move_modifier = draw_chance(card, location)
 				if move_modifier != -1:
 					location = move_modifier
 			if is_community_chest(location):
-				print(f"{dice} !!! You landed on community chest")
+				#print(f"{dice} !!! You landed on community chest")
 				if len(community_chest) == 0:
 					community_chest = init_community_chest()
-				move_modifier = draw_community_chest(chance)
+				card = community_chest.pop()
+				move_modifier = draw_community_chest(card)
 				if move_modifier != -1:
 					location = move_modifier
 
 		board[location][1] += 1
 
 	print(board)
-  
-  #TODO -> return top 3 squares
+	print(f"\n{get_top_3(board)}")
 	return -1
 
 
 def roll() -> list:
 	dice = []
-	print("\nRolling...")
+	#print("\nRolling...")
 	dice.append(random.randint(1,4))
 	dice.append(random.randint(1,4))
-	print(f"--> {dice}")
+	#print(f"--> {dice}")
 	return dice
 
 def is_double(dice) -> bool:
 	output = dice[0] == dice[1]
-	if output:
-		print(f"{dice} is a double -> player would roll again")
-	else:
-		print(f"{dice} is not double -> end of turn")
+	#if output:
+	#	print(f"{dice} is a double -> player would roll again")
+	#else:
+	#	print(f"{dice} is not double -> end of turn")
 	return output
 
 def roll_total(dice) -> int:
 	output = sum(dice)
-	print(f"{dice} results in a movement of {output}")
+	#print(f"{dice} results in a movement of {output}")
 	return output
 
 def init_board() -> list:
@@ -144,7 +143,7 @@ def move(current_location, dice) -> int:
 	output = current_location + roll_total(dice)
 	if (output > 39):
 		output -= 40
-	print(f"{dice} moves from {current_location} to {output}")
+	#print(f"{dice} moves from {current_location} to {output}")
 	return output
 	
 def is_chance(location) -> bool:
@@ -183,9 +182,8 @@ def init_community_chest() -> list:
 	random.shuffle(output)
 	return output
 
-def draw_chance(cards, current_location) -> int:
-	card = cards.pop()
-	print(f"{card} - chance drawn was {card}")
+def draw_chance(card, current_location) -> int:
+	#print(f"Chance drawn was {card}")
 	if card == "Advance to GO":
 		return 0
 	elif card == "Go to JAIL":
@@ -219,14 +217,33 @@ def draw_chance(cards, current_location) -> int:
 	else:
 		return -1
 
-def draw_community_chest(cards) -> int:
-	card = cards.pop()
+def draw_community_chest(card) -> int:
+	#print(f"Community Chest drawn was {card}")
 	if card == "Advance to GO":
 		return 0
 	elif card == "Go to JAIL":
 		return 10
 	else:
 		return -1
+
+def get_top_3(board) -> list:
+	top_3 = [
+		[0,0],
+		[0,0],
+		[0,0]
+	]
+	for square in board:
+		if square[1] > top_3[2][1]:
+			top_3[2] = square
+		if square[1] > top_3[1][1]:
+			top_3[2] = top_3[1]
+			top_3[1] = square
+		if square[1] > top_3[0][1]:
+			top_3[1] = top_3[0]
+			top_3[0] = square
+
+	print(str(top_3[0][0]).zfill(2) + str(top_3[1][0]).zfill(2) + str(top_3[2][0]).zfill(2))
+	return top_3
 
 if __name__ == "__main__":
 	start_time = time.time()
