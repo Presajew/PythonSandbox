@@ -82,29 +82,50 @@ def calculate() -> int:
 		else:
 			double_count = 0
 
+		# if 3 doubles, go to jail
 		if double_count == 3:		
-			#print(f"{dice} !!! 3 doubles in a row sends you to jail")
-			location = 10	
-		else:
-			location = move(location, dice)
-			if is_chance(location):
-				#print(f"{dice} !!! You landed on chance")
-				if len(chance) == 0:
-					chance = init_chance()
-				card = chance.pop()
-				move_modifier = draw_chance(card, location)
-				if move_modifier != -1:
-					location = move_modifier
-			if is_community_chest(location):
-				#print(f"{dice} !!! You landed on community chest")
-				if len(community_chest) == 0:
-					community_chest = init_community_chest()
-				card = community_chest.pop()
-				move_modifier = draw_community_chest(card)
-				if move_modifier != -1:
-					location = move_modifier
+			location = 10
+			board[location][1] += 1
+			double_count = 0
+			continue
 
+		location = move(location, dice)
+
+		# lands on go to jail
+		if location == 30:
+			location = 10
+			board[location][1] += 1
+			continue
+		
+		# lands on chance
+		if is_chance(location):
+			#print(f"{dice} !!! You landed on chance")
+			if len(chance) == 0:
+				chance = init_chance()
+			card = chance.pop()
+			move_modifier = draw_chance(card, location)
+			if move_modifier != -1:
+				location = move_modifier
+			board[location][1] += 1
+			continue
+		
+		# lands on community chest
+		if is_community_chest(location):
+			#print(f"{dice} !!! You landed on community chest")
+			if len(community_chest) == 0:
+				community_chest = init_community_chest()
+			card = community_chest.pop()
+			move_modifier = draw_community_chest(card)
+			if move_modifier != -1:
+				location = move_modifier
+			board[location][1] += 1
+			continue
+
+		# all other scenarios
 		board[location][1] += 1
+			
+
+		
 
 	print(board)
 	print(f"\n{get_top_3(board)}")
@@ -143,7 +164,6 @@ def move(current_location, dice) -> int:
 	output = current_location + roll_total(dice)
 	if (output > 39):
 		output -= 40
-	#print(f"{dice} moves from {current_location} to {output}")
 	return output
 	
 def is_chance(location) -> bool:
