@@ -124,9 +124,9 @@ def calculate() -> int:
         # all other scenarios
         board[location][1] += 1
 
-    print(board)
-    print(f"\n{get_top_3(board)}")
-    return -1
+    top3 = get_top_3(board)
+    output = str(top3[0][0]) + str(top3[1][0]) + str(top3[2][0])
+    return int(output)
 
 
 def roll() -> list:
@@ -262,12 +262,6 @@ def get_top_3(board) -> list:
         if square[1] > top_3[0][1]:
             top_3[1] = top_3[0]
             top_3[0] = square
-
-    print(
-        str(top_3[0][0]).zfill(2)
-        + str(top_3[1][0]).zfill(2)
-        + str(top_3[2][0]).zfill(2)
-    )
     return top_3
 
 
